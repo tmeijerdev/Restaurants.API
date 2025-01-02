@@ -1,9 +1,9 @@
-using Restaurants.Domain.Entities;
+using Restaurants.Application.Restaurants.DTOs;
 
 namespace Restaurants.Application.Restaurants;
 
 public interface IRestaurantsService
 {
-    Task<IEnumerable<Restaurant>> GetAllRestaurants();
-    Task<Restaurant?> GetById(int id);
+    Task<IEnumerable<RestaurantDto>> GetAllRestaurants();
+    Task<RestaurantDto?> GetById(int id);
 }
