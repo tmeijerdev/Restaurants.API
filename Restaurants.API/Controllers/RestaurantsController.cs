@@ -4,6 +4,7 @@ using Restaurants.Application.Restaurants.DTOs;
 
 namespace Restaurants.API.Controllers
 {
+    // ApiController attribute automatically checks if the request body has the obligated values that can't be null
     [Route("api/[controller]")]
     [ApiController]
     public class RestaurantsController(IRestaurantsService restaurantsService) : ControllerBase
@@ -25,8 +26,9 @@ namespace Restaurants.API.Controllers
             return Ok(restaurant);
         }
 
+        // [FromBody] attribute is not necessary if [ApiController] attirbute is added
         [HttpPost]
-        public async Task<IActionResult> CreateRestaurant([FromBody] CreateRestaurantDto createRestaurantDto)
+        public async Task<IActionResult> CreateRestaurant(CreateRestaurantDto createRestaurantDto)
         {
             int id = await restaurantsService.Create(createRestaurantDto);
 
