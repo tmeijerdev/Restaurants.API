@@ -12,7 +12,8 @@ public class CreateRestaurantCommandHandler(ILogger<CreateRestaurantCommandHandl
 {
     public async Task<int> Handle(CreateRestaurantCommand request, CancellationToken cancellationToken)
     {
-        logger.LogInformation("Creating a new restaurant");
+        // @ means to serialize the object
+        logger.LogInformation("Creating a new restaurant {@Restaurant}", request);
 
         var restaurant = mapper.Map<Restaurant>(request);
 
