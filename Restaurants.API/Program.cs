@@ -12,6 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
+builder.Services.AddScoped<RequestTimeLoggingMiddleware>();
 
 
 builder.Services.AddApplication();
@@ -41,6 +42,8 @@ await seeder.Seed();
 // Configure the HTTP request pipeline.
 // First one for global exception handling
 app.UseMiddleware<ErrorHandlingMiddleware>();
+app.UseMiddleware<RequestTimeLoggingMiddleware>();
+
 // Enable this to add HTTP context logging
 app.UseSerilogRequestLogging();
 
