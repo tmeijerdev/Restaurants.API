@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Restaurants.Application.Restaurants.Commands.CreateRestaurant;
 using Restaurants.Application.Restaurants.Commands.DeleteRestaurant;
@@ -12,9 +13,11 @@ namespace Restaurants.API.Controllers
     // ApiController attribute automatically checks if the request body has the obligated values that can't be null
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RestaurantsController(IMediator mediator) : ControllerBase
     {
         [HttpGet]
+        [AllowAnonymous]
         // [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RestaurantDto>))]
         public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetAll()
         {
