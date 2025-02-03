@@ -52,7 +52,9 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
 // Add prefix api/identity 
-app.MapGroup("api/identity").MapIdentityApi<User>();
+app.MapGroup("api/identity")
+    .WithTags("Identity")
+    .MapIdentityApi<User>();
 
 // app.MapIdentityApi<User>();
 
