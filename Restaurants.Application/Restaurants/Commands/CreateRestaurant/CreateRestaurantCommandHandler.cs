@@ -18,7 +18,7 @@ public class CreateRestaurantCommandHandler(ILogger<CreateRestaurantCommandHandl
 
         // @ means to serialize the object
         logger.LogInformation("{UserEmail} [{UserId}] is creating a new restaurant {@Restaurant}",
-            currentUser.Email,
+            currentUser!.Email,
             currentUser.Id,
             request);
 
