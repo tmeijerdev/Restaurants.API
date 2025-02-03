@@ -7,6 +7,7 @@ using Restaurants.Application.Restaurants.Commands.UpdateRestaurant;
 using Restaurants.Application.Restaurants.DTOs;
 using Restaurants.Application.Restaurants.Queries.GetAllRestaurants;
 using Restaurants.Application.Restaurants.Queries.GetRestaurantById;
+using Restaurants.Domain.Constants;
 
 namespace Restaurants.API.Controllers
 {
@@ -34,6 +35,7 @@ namespace Restaurants.API.Controllers
 
         // [FromBody] attribute is not necessary if [ApiController] attirbute is added
         [HttpPost]
+        [Authorize(Roles = UserRoles.Owner)]
         public async Task<IActionResult> CreateRestaurant(CreateRestaurantCommand command)
         {
             int id = await mediator.Send(command);

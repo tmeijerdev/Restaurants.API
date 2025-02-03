@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,7 +20,9 @@ public static class ServiceCollectionExtensions
                 // Make Id visible of request
                 .EnableSensitiveDataLogging());
 
+        // AddRoles to enable custom claims
         services.AddIdentityApiEndpoints<User>()
+            .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<RestaurantsDbContext>();
 
         services.AddScoped<IRestaurantSeeder, RestaurantSeeder>();
