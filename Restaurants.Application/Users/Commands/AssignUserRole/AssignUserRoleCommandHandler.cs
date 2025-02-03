@@ -7,7 +7,7 @@ using Restaurants.Domain.Exceptions;
 
 namespace Restaurants.Application.Users.Commands.AssignUserRole;
 
-public class AssignUserCommandHandler(ILogger<AssignUserCommandHandler> logger,
+public class AssignUserRoleCommandHandler(ILogger<AssignUserRoleCommandHandler> logger,
     UserManager<User> userManager,
     RoleManager<IdentityRole> roleManager) : IRequestHandler<AssignUserRoleCommand>
 {
@@ -21,7 +21,5 @@ public class AssignUserCommandHandler(ILogger<AssignUserCommandHandler> logger,
             ?? throw new NotFoundException(nameof(IdentityRole), request.RoleName);
 
         await userManager.AddToRoleAsync(user, role.Name!);
-
-
     }
 }
