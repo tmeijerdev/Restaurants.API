@@ -37,7 +37,7 @@ jobs:
           az deployment group create \
             --name RestaurantsDeployment \
             --resource-group $RESOURCE_GROUP \
-            --template-file ./main.bicep \
+            --template-file .bicep/main.bicep \
             --parameters sqlAdministratorLogin="adminuser" \
                          sqlAdministratorPassword="MyP@ssw0rd!" \
                          location="westeurope"
