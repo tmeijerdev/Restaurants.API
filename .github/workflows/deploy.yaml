@@ -6,6 +6,9 @@ on:
         RG_NAME:
           required: true
           type: string
+    secrets:
+      AZURE_RBAC_CREDENTIALS:
+        required: true
 
 jobs:
   deploy:
