@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    uses: tmeijerdev/restaurants.API.github/workflows/build.yml@main
+    uses: tmeijerdev/restaurants.API/.github/workflows/build.yml@main
 
   # deploy:
   #   needs: build
