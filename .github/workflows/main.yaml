@@ -10,6 +10,8 @@ jobs:
   build:
     uses: tmeijerdev/restaurants.API/.github/workflows/build.yaml@main
 
-  # deploy:
-  #   needs: build
-  #   uses: ./.github/workflows/deploy.yml
+  deploy:
+    needs: build
+    uses: tmeijerdev/restaurants.API/.github/workflows/deploy.yaml@main
+    with:
+      RG_NAME: 'myCoolResourceGroup'

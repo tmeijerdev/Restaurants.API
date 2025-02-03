@@ -2,18 +2,47 @@ name: deploy
 
 on:
   workflow_call:
+  inputs:
+      RG_NAME:
+        required: true
+        type: string
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4
 
-      - name: Setup .NET Core SDK
-        uses: actions/setup-dotnet@v4.0.0
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
         with:
-          dotnet-version: 8.0.x
+          name: app-artifact         
+          path: ./publish_output     
 
-      - name: Deploy Application
-        run: echo "Deployment logic goes here"
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_RBAC_CREDENTIALS }}
+          
+
+      - name: Deploy Bicep
+        env:
+          RESOURCE_GROUP: ${{ inputs.RG_NAME }}
+        run: |
+          az deployment group create \
+            --name RestaurantsDeployment \
+            --resource-group $RESOURCE_GROUP \
+            --template-file main.bicep \
+            --parameters sqlAdministratorLogin="adminuser" \
+                         sqlAdministratorPassword="MyP@ssw0rd!" \
+                         location="westeurope"
+
+      - name: Deploy to Azure WebApp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ inputs.WEBAPP_NAME }}
+          package: './publish_output'
+          publish-profile: ${{ secrets.AZURE_RBAC_CREDENTIALS }}
+
