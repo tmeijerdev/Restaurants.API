@@ -11,26 +11,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Download Artifact
         uses: actions/download-artifact@v4
         with:
           name: app-artifact
-          path: ./publish_output
+          path: ./artifact
 
-      - name: Verify Artifact Contents
+      - name: Verify Artifact
         run: |
           echo "Checking downloaded artifacts..."
-          ls -l ./publish_output
-
-      - name: Move ZIP file to root for deployment
-        run: |
-          ARTIFACT_FILE=$(ls ./publish_output/*.zip | head -n 1)
-          echo "Artifact file found: $ARTIFACT_FILE"
-          mv "$ARTIFACT_FILE" ./app.zip
-          ls -l
+          ls -l ./artifact
 
       - name: Azure Login
         uses: azure/login@v2
@@ -43,25 +36,18 @@ jobs:
             --name MyResourceGroup \
             --location westeurope
 
-      - name: Deploy Bicep
-        run: |
-          az deployment group create \
-            --name RestaurantsDeployment \
-            --resource-group MyResourceGroup \
-            --template-file ./bicep/main.bicep \
-            --parameters sqlAdministratorLogin="adminuser" \
-                        sqlAdministratorPassword="MyP@ssw0rd!" \
-                        location="westeurope"
-
       - name: Get WebApp Name
         run: |
+          echo "Retrieving web app name..."
           WEBAPP_NAME=$(az webapp list --resource-group "MyResourceGroup" --query "[0].name" -o tsv)
           echo "WEBAPP_NAME=$WEBAPP_NAME" >> $GITHUB_ENV
+          echo "Deploying to $WEBAPP_NAME"
 
       - name: Deploy to Azure WebApp (Linux)
         run: |
+          ARTIFACT_FILE=$(ls ./artifact/*.zip | head -n 1)
+          echo "Deploying artifact: $ARTIFACT_FILE"
           az webapp deploy \
             --resource-group "MyResourceGroup" \
             --name "$WEBAPP_NAME" \
-            --src-path "app.zip" \
-            --type zip
+            --src-path "$ARTIFACT_FILE"
