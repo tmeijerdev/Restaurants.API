@@ -19,7 +19,6 @@ namespace Restaurants.API.Controllers
     public class RestaurantsController(IMediator mediator) : ControllerBase
     {
         [HttpGet]
-        // [AllowAnonymous]
         // [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RestaurantDto>))]
         // [Authorize(Policy = PolicyNames.CreatedAtLeast2Restaurants)]
         [AllowAnonymous]
