@@ -49,7 +49,7 @@ jobs:
           az webapp deployment source config-zip \
             --resource-group MyResourceGroup \
             --name $WEBAPP_NAME \
-            --src ./artifact/publish.zip
+            --src ./artifact
 
       - name: Restart Web App
         run: |
