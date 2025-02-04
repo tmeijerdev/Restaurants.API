@@ -43,11 +43,14 @@ jobs:
           echo "WEBAPP_NAME=$WEBAPP_NAME" >> $GITHUB_ENV
           echo "Deploying to $WEBAPP_NAME"
 
-      - name: Deploy to Azure WebApp (Linux)
+      - name: Deploy Web App using ZIP
         run: |
-          ARTIFACT_FILE=$(ls ./artifact/*.zip | head -n 1)
-          echo "Deploying artifact: $ARTIFACT_FILE"
-          az webapp deploy \
-            --resource-group "MyResourceGroup" \
-            --name "$WEBAPP_NAME" \
-            --src-path "$ARTIFACT_FILE"
+          echo "Deploying to Azure Web App..."
+          az webapp deployment source config-zip \
+            --resource-group MyResourceGroup \
+            --name $WEBAPP_NAME \
+            --src ./artifact/publish.zip
+
+      - name: Restart Web App
+        run: |
+          az webapp restart --resource-group MyResourceGroup --name $WEBAPP_NAME
