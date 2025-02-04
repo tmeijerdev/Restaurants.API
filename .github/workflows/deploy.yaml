@@ -17,11 +17,11 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v4
         with:
-          name: dotnet-app
-          path: .
+          name: publish_output
+          path: ./publish_output
 
       - name: Check artifact
-        run: ls -l
+        run: ls -l ./publish_output
 
       - name: Azure Login
         uses: azure/login@v2
@@ -31,14 +31,14 @@ jobs:
       - name: Create Resource Group if not exists
         run: |
           az group create \
-            --name MyResourceGroup \
+            --name MyResourceGroup1 \
             --location westeurope
 
       - name: Deploy Bicep
         run: |
           az deployment group create \
             --name RestaurantsDeployment \
-            --resource-group MyResourceGroup \
+            --resource-group MyResourceGroup1 \
             --template-file ./bicep/main.bicep \
             --parameters sqlAdministratorLogin="adminuser" \
                         sqlAdministratorPassword="MyP@ssw0rd!" \
@@ -47,12 +47,13 @@ jobs:
       - name: Get WebApp Name
         run: |
           echo "Retrieving web app name..."
-          WEBAPP_NAME=$(az webapp list --resource-group "MyResourceGroup" --query "[0].name" -o tsv)
+          WEBAPP_NAME=$(az webapp list --resource-group "MyResourceGroup1" --query "[0].name" -o tsv)
           echo "WEBAPP_NAME=$WEBAPP_NAME" >> $GITHUB_ENV
           echo "Deploying to $WEBAPP_NAME"
 
       - name: Deploy to Azure Web App
         run: |
-          az webapp deployment source config-zip --resource-group MyResourceGroup \
-                                                --name $WEBAPP_NAME \
-                                                --src dotnet-app.zip
+          az webapp deploy --resource-group MyResourceGroup1 \
+                           --name $WEBAPP_NAME \
+                           --src-path ./publish_output \
+                           --type zip
