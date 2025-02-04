@@ -28,8 +28,10 @@ param sqlAdministratorPassword string = 'P@ssword123+'
 param sqlAdministratorLogin string = 'sqlAdmin'
 
 // App service parameters
-param planSku string = 'B1'
-param planTier string = 'Basic'
+// param planSku string = 'B1'
+// param planTier string = 'Basic'
+param planSku string = 'P1v2'
+param planTier string = 'PremiumV2'
 
 // ------------------------ //
 // 1) Storage Account Module
@@ -94,9 +96,6 @@ var databaseConnectionStringAdmin = format(
 
 module appServiceModule './AppService/appservice.bicep' = {
   name: 'appServiceDeploy'
-  dependsOn: [
-    appInsightsModule
-  ]
   params: {
     planLocation: location
     appServiceName: appServiceName
@@ -107,6 +106,7 @@ module appServiceModule './AppService/appservice.bicep' = {
     creationDate: creationDate
     databaseConnectionString: databaseConnectionStringAdmin
     storageAccountConnectionString: storageAccountModule.outputs.storageAccountConnectionString
+    appInsightsConnectionString: appInsightsModule.outputs.appInsightsConnectionString
   }
 }
 

@@ -8,11 +8,11 @@ param planSku string
 param planTier string
 param databaseConnectionString string
 param storageAccountConnectionString string
+param appInsightsConnectionString string
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2024-04-01' = {
   name: planName
   location: planLocation
-  kind: 'linux'
   sku: {
     name: planSku
     tier: planTier
@@ -25,7 +25,6 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2024-04-01' = {
 resource appServiceResource 'Microsoft.Web/sites@2024-04-01' = {
   name: appServiceName
   location: planLocation
-  kind: 'linux'
   properties: {
     serverFarmId: appServicePlan.id
     siteConfig: {
@@ -37,6 +36,14 @@ resource appServiceResource 'Microsoft.Web/sites@2024-04-01' = {
         {
           name: 'StorageAccountConnectionString'
           value: storageAccountConnectionString
+        }
+        {
+          name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'   
+          value: appInsightsConnectionString
+        }
+        {
+          name: 'ApplicationInsightsAgent_EXTENSION_VERSION' 
+          value: '~3'
         }
       ]
     }

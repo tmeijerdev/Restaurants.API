@@ -19,4 +19,6 @@ resource appIns 'Microsoft.Insights/components@2020-02-02' = {
   }
 }
 
-output appInsightsKey string = reference(appIns.id, '2014-04-01').InstrumentationKey
+// output appInsightsKey string = reference(appIns.id, '2014-04-01').InstrumentationKey
+output appInsightsConnectionString string = appIns.properties.ConnectionString
+
