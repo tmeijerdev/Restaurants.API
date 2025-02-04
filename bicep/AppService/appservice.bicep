@@ -25,11 +25,19 @@ resource appServiceResource 'Microsoft.Web/sites@2024-04-01' = {
   properties: {
     serverFarmId: appServicePlan.id
     siteConfig: {
-      appSettings: [
+      connectionStrings: [
         {
           name: 'RestaurantsDb'
-          value: databaseConnectionString
+          connectionString: databaseConnectionString
+          type: 'SQLAzure' 
         }
+        {
+          name: 'StorageAccountConnectionString'
+          connectionString: storageAccountConnectionString
+          type: 'Custom'
+        }
+      ]
+      appSettings: [
         {
           name: 'StorageAccountConnectionString'
           value: storageAccountConnectionString
