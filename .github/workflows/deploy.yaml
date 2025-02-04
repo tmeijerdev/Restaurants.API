@@ -42,10 +42,15 @@ jobs:
                         sqlAdministratorPassword="MyP@ssw0rd!" \
                         location="westeurope"
 
-      - name: Deploy to Azure WebApp
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: RestaurantApp
-          package: './publish_output'
-          publish-profile: ${{ secrets.AZURE_RBAC_CREDENTIALS }}
+      - name: Get WebApp Name
+        run: |
+          WEBAPP_NAME=$(az webapp list --resource-group "MyResourceGroup" --query "[0].name" -o tsv)
+          echo "WEBAPP_NAME=$WEBAPP_NAME" >> $GITHUB_ENV
+
+      - name: Deploy to Azure WebApp (Linux)
+        run: |
+          az webapp deploy \
+            --resource-group "MyResourceGroup" \
+            --name "$WEBAPP_NAME" \
+            --src-path "./publish_output"
 

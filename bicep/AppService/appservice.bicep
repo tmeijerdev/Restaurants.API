@@ -12,15 +12,20 @@ param storageAccountConnectionString string
 resource appServicePlan 'Microsoft.Web/serverfarms@2024-04-01' = {
   name: planName
   location: planLocation
+  kind: 'linux'
   sku: {
     name: planSku
     tier: planTier
+  }
+  properties: {
+    reserved: true
   }
 }
 
 resource appServiceResource 'Microsoft.Web/sites@2024-04-01' = {
   name: appServiceName
   location: planLocation
+  kind: 'linux'
   properties: {
     serverFarmId: appServicePlan.id
     siteConfig: {
