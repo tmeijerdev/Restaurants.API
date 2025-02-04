@@ -24,8 +24,14 @@ jobs:
       - name: Publish
         run: dotnet publish ./Restaurants.API/Restaurants.API.csproj -c Release -o ./publish_output
 
-      - name: Upload Artifact
+      - name: Create ZIP artifact
+        run: |
+          cd ./publish_output
+          zip -r ../dotnet-app.zip ./*
+          cd ..
+
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-artifact
-          path: ./publish_output
+          name: dotnet-app
+          path: dotnet-app.zip
