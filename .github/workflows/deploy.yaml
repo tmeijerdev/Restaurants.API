@@ -51,9 +51,15 @@ jobs:
           echo "WEBAPP_NAME=$WEBAPP_NAME" >> $GITHUB_ENV
           echo "Deploying to $WEBAPP_NAME"
 
+      - name: Create ZIP for Deployment
+        run: |
+          cd ./publish_output
+          zip -r ../deploy.zip ./*
+          cd ..
+
       - name: Deploy to Azure Web App
         run: |
           az webapp deploy --resource-group MyResourceGroup1 \
-                           --name $WEBAPP_NAME \
-                           --src-path ./publish_output \
-                           --type zip
+                          --name $WEBAPP_NAME \
+                          --src-path ./deploy.zip \
+                          --type zip
