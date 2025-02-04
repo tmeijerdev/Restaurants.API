@@ -30,6 +30,7 @@ jobs:
         run: |
           az deployment sub create \
             --name RestaurantsDeployment \
+            --location westeurope \
             --template-file ./bicep/main.bicep \
             --parameters sqlAdministratorLogin="adminuser" \
                          sqlAdministratorPassword="MyP@ssw0rd!" \
