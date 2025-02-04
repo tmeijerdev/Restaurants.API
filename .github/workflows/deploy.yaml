@@ -52,5 +52,6 @@ jobs:
           az webapp deploy \
             --resource-group "MyResourceGroup" \
             --name "$WEBAPP_NAME" \
-            --src-path "./publish_output"
+            --src-path "$(pwd)/publish_output" \
+            --type zip
 
