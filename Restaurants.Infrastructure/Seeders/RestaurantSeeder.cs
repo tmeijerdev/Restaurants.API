@@ -9,11 +9,33 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext) : IRestaurantSee
 {
     public async Task Seed()
     {
+        var applicationGuidUser = Guid.NewGuid().ToString();
+
         if(await dbContext.Database.CanConnectAsync())
         {
+            if (!dbContext.Users.Any(u => u.UserName == "defaultowner"))
+            {
+                var owner = new User
+                {
+                    Id = applicationGuidUser, 
+                    UserName = "defaultowner",
+                    Email = "owner@default.com",
+                    NormalizedUserName = "DEFAULTOWNER",
+                    NormalizedEmail = "OWNER@DEFAULT.COM",
+                    EmailConfirmed = true
+                };
+
+                dbContext.Users.Add(owner);
+                await dbContext.SaveChangesAsync();
+            }
+
             if(!dbContext.Restaurants.Any())
             {
                 var restaurants = GetRestaurants();
+                foreach (var restaurant in restaurants)
+                {
+                    restaurant.OwnerId = applicationGuidUser;
+                }
                 dbContext.Restaurants.AddRange(restaurants);
                 await dbContext.SaveChangesAsync();
             }

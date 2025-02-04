@@ -31,23 +31,21 @@ builder.Services.AddInfrastructure(builder.Configuration);
 var app = builder.Build();
 
 var scope = app.Services.CreateScope();
-
 var services = scope.ServiceProvider;
 var context = services.GetRequiredService<RestaurantsDbContext>();
+var seeder = services.GetRequiredService<IRestaurantSeeder>();
 
 try
 {
-    context.Database.Migrate();
+    await context.Database.EnsureCreatedAsync(); 
+    await seeder.Seed(); 
+    await context.Database.MigrateAsync(); 
 }
 catch (Exception ex)
 {
     var logger = services.GetRequiredService<ILogger<Program>>();
-    logger.LogError(ex, "Error with performing migrations");
+    logger.LogError(ex, "Error with performing migrations or seeding");
 }
-
-var seeder = scope.ServiceProvider.GetRequiredService<IRestaurantSeeder>();
-
-await seeder.Seed();
 
 // Configure the HTTP request pipeline.
 // First one for global exception handling
