@@ -13,7 +13,7 @@ namespace Restaurants.API.Controllers;
 public class IdentityController(IMediator mediator) : ControllerBase
 {
     [HttpPatch("user")]
-    [Authorize]
+    // [Authorize]
     public async Task<IActionResult> UpdateUserDetails(UpdateUserDetailsCommand command)
     {
         await mediator.Send(command);
@@ -21,7 +21,7 @@ public class IdentityController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost("userRole")]
-    [Authorize(Roles = UserRoles.Admin)]
+    // [Authorize(Roles = UserRoles.Admin)]
     public async Task<IActionResult> AssignUserRole(AssignUserRoleCommand command)
     {
         await mediator.Send(command);
@@ -29,7 +29,7 @@ public class IdentityController(IMediator mediator) : ControllerBase
     }
 
     [HttpDelete("userRole")]
-    [Authorize(Roles = UserRoles.Admin)]
+    // [Authorize(Roles = UserRoles.Admin)]
     public async Task<IActionResult> UnassignUserRole(UnassignUserRoleCommand command)
     {
         await mediator.Send(command);
