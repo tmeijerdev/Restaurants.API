@@ -37,6 +37,16 @@ resource sqlDatabase 'Microsoft.Sql/servers/databases@2021-11-01' = {
   }
 }
 
+// Allow all azure services
+resource firewallAllowAzureServices 'Microsoft.Sql/servers/firewallRules@2021-11-01' = {
+  parent: sqlServer
+  name: 'Allow Azure services'
+  properties: {
+    startIpAddress: '0.0.0.0'
+    endIpAddress: '0.0.0.0'
+  }
+}
+
 
 output databaseName string = trim(sqlDatabase.name)
 output serverUrl string = trim(sqlServer.properties.fullyQualifiedDomainName)

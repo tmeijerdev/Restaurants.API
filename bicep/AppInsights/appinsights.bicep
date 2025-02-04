@@ -3,7 +3,6 @@ param rgLocation string = resourceGroup().location
 param creationDate string
 param createdBy string
 
-
 resource appIns 'Microsoft.Insights/components@2020-02-02' = {
   name:name
   kind:'web'
@@ -11,7 +10,6 @@ resource appIns 'Microsoft.Insights/components@2020-02-02' = {
   properties:{
     Application_Type:'web'
     Request_Source:'rest'
-    Flow_Type:'Bluefield'
   }
   tags: {
     CreatedAt: creationDate
