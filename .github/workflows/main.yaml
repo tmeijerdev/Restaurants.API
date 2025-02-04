@@ -13,7 +13,5 @@ jobs:
   deploy:
     needs: build
     uses: tmeijerdev/restaurants.API/.github/workflows/deploy.yaml@main
-    with:
-      RG_NAME: 'myCoolResourceGroup'
     secrets:
       AZURE_RBAC_CREDENTIALS: ${{ secrets.AZURE_RBAC_CREDENTIALS }}

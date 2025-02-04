@@ -7,7 +7,7 @@ param createdBy string = 't.meijer.dev@hotmail.com'
 
 
 
-resource rgName_resource 'Microsoft.Resources/resourceGroups@2024-11-01' = {
+resource resourceGroup 'Microsoft.Resources/resourceGroups@2024-11-01' = {
   name: rgName
   location: rgLocation
   tags: {

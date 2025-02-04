@@ -31,12 +31,9 @@ jobs:
           
 
       - name: Deploy Bicep
-        env:
-          RESOURCE_GROUP: ${{ inputs.RG_NAME }}
         run: |
           az deployment group create \
             --name RestaurantsDeployment \
-            --resource-group $RESOURCE_GROUP \
             --template-file ./bicep/main.bicep \
             --parameters sqlAdministratorLogin="adminuser" \
                          sqlAdministratorPassword="MyP@ssw0rd!" \
