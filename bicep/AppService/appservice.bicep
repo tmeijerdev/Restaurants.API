@@ -17,9 +17,6 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2024-04-01' = {
     name: planSku
     tier: planTier
   }
-  properties: {
-    reserved: true
-  }
 }
 
 resource appServiceResource 'Microsoft.Web/sites@2024-04-01' = {
@@ -38,11 +35,11 @@ resource appServiceResource 'Microsoft.Web/sites@2024-04-01' = {
           value: storageAccountConnectionString
         }
         {
-          name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'   
+          name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
           value: appInsightsConnectionString
         }
         {
-          name: 'ApplicationInsightsAgent_EXTENSION_VERSION' 
+          name: 'ApplicationInsightsAgent_EXTENSION_VERSION'
           value: '~3'
         }
       ]
