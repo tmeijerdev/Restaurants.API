@@ -2,10 +2,6 @@ name: deploy
 
 on:
   workflow_call:
-    inputs:
-      RG_NAME:
-        required: true
-        type: string
     secrets:
       AZURE_RBAC_CREDENTIALS:
         required: true
