@@ -27,7 +27,7 @@ resource appServiceResource 'Microsoft.Web/sites@2024-04-01' = {
     siteConfig: {
       appSettings: [
         {
-          name: 'DatabaseConnectionString'
+          name: 'RestaurantsDb'
           value: databaseConnectionString
         }
         {

@@ -5,6 +5,8 @@ using Serilog;
 using Restaurants.API.Middlewares;
 using Restaurants.Domain.Entities;
 using Restaurants.API.Extensions;
+using Restaurants.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +31,20 @@ builder.Services.AddInfrastructure(builder.Configuration);
 var app = builder.Build();
 
 var scope = app.Services.CreateScope();
+
+var services = scope.ServiceProvider;
+var context = services.GetRequiredService<RestaurantsDbContext>();
+
+try
+{
+    context.Database.Migrate();
+}
+catch (Exception ex)
+{
+    var logger = services.GetRequiredService<ILogger<Program>>();
+    logger.LogError(ex, "Error with performing migrations");
+}
+
 var seeder = scope.ServiceProvider.GetRequiredService<IRestaurantSeeder>();
 
 await seeder.Seed();
