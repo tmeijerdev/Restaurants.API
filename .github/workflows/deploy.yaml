@@ -28,7 +28,7 @@ jobs:
 
       - name: Deploy Bicep
         run: |
-          az deployment group create \
+          az deployment sub create \
             --name RestaurantsDeployment \
             --template-file ./bicep/main.bicep \
             --parameters sqlAdministratorLogin="adminuser" \
