@@ -22,10 +22,10 @@ jobs:
         run: dotnet build --no-restore
 
       - name: Publish
-        run: dotnet publish ./Restaurants.API/Restaurants.API.csproj -c Release -o publish_output
+        run: dotnet publish ./Restaurants.API/Restaurants.API.csproj -c Release -o ./publish_output
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-artifact
-          path: publish_output
+          path: ./publish_output

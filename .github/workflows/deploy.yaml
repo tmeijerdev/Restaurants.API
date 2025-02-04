@@ -18,12 +18,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: app-artifact
-          path: ./artifact
+          path: ./publish_output
 
       - name: Verify Artifact
         run: |
           echo "Checking downloaded artifacts..."
-          ls -l ./artifact
+          ls -l ./publish_output
 
       - name: Azure Login
         uses: azure/login@v2
@@ -46,10 +46,10 @@ jobs:
       - name: Deploy Web App using ZIP
         run: |
           echo "Deploying to Azure Web App..."
-          az webapp deployment source config-zip \
+          az webapp deploy \
             --resource-group MyResourceGroup \
             --name $WEBAPP_NAME \
-            --src ./artifact
+            --src-path ./publish_output
 
       - name: Restart Web App
         run: |
