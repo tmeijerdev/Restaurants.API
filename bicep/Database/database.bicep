@@ -8,9 +8,8 @@ param sqlAdministratorPassword string
 param creationDate string
 param createdBy string
 
-
 // Resource: SQL Server
-resource sqlServer 'Microsoft.Sql/servers@2024-05-01-preview' = {
+resource sqlServer 'Microsoft.Sql/servers@2021-11-01' = {
   name: sqlServerName
   location: location
   properties: {
@@ -25,7 +24,7 @@ resource sqlServer 'Microsoft.Sql/servers@2024-05-01-preview' = {
 }
 
 // Resource: SQL Database
-resource sqlDatabase 'Microsoft.Sql/servers/databases@2024-05-01-preview' = {
+resource sqlDatabase 'Microsoft.Sql/servers/databases@2021-11-01' = {
   parent: sqlServer
   name: databaseName
   location: location

@@ -31,14 +31,14 @@ jobs:
       - name: Create Resource Group if not exists
         run: |
           az group create \
-            --name MyResourceGroup1 \
+            --name MyResourceGroup2 \
             --location westeurope
 
       - name: Deploy Bicep
         run: |
           az deployment group create \
             --name RestaurantsDeployment \
-            --resource-group MyResourceGroup1 \
+            --resource-group MyResourceGroup2 \
             --template-file ./bicep/main.bicep \
             --parameters sqlAdministratorLogin="adminuser" \
                         sqlAdministratorPassword="MyP@ssw0rd!" \
@@ -47,7 +47,7 @@ jobs:
       - name: Get WebApp Name
         run: |
           echo "Retrieving web app name..."
-          WEBAPP_NAME=$(az webapp list --resource-group "MyResourceGroup1" --query "[0].name" -o tsv)
+          WEBAPP_NAME=$(az webapp list --resource-group "MyResourceGroup2" --query "[0].name" -o tsv)
           echo "WEBAPP_NAME=$WEBAPP_NAME" >> $GITHUB_ENV
           echo "Deploying to $WEBAPP_NAME"
 
@@ -59,7 +59,7 @@ jobs:
 
       - name: Deploy to Azure Web App
         run: |
-          az webapp deploy --resource-group MyResourceGroup1 \
+          az webapp deploy --resource-group MyResourceGroup2 \
                           --name $WEBAPP_NAME \
                           --src-path ./deploy.zip \
                           --type zip
