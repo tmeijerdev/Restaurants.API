@@ -24,17 +24,23 @@ jobs:
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_RBAC_CREDENTIALS }}
+
+      - name: Create Resource Group if not exists
+        run: |
+          az group create \
+            --name MyResourceGroup \
+            --location westeurope
           
 
       - name: Deploy Bicep
         run: |
-          az deployment sub create \
+          az deployment group create \
             --name RestaurantsDeployment \
-            --location westeurope \
+            --resource-group MyResourceGroup \
             --template-file ./bicep/main.bicep \
             --parameters sqlAdministratorLogin="adminuser" \
-                         sqlAdministratorPassword="MyP@ssw0rd!" \
-                         location="westeurope"
+                        sqlAdministratorPassword="MyP@ssw0rd!" \
+                        location="westeurope"
 
       - name: Deploy to Azure WebApp
         uses: azure/webapps-deploy@v2

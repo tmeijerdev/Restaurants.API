@@ -10,7 +10,6 @@ var sqlServerName            = toLower('${genericPrefix}-sqlserver')
 var sqlDatabaseName          = toLower('${genericPrefix}-sqldb')
 var appServicePlanName       = toLower('${genericPrefix}-plan')
 var appServiceName           = toLower('${genericPrefix}-app')
-var resourceGroupName        = toLower('${genericPrefix}-resourceGroup')
 
 
 // Generic parameters
@@ -33,15 +32,7 @@ param planSku string = 'B1'
 param planTier string = 'Basic'
 
 // ------------------------ //
-// 1) Resourcegroup Module
-// ------------------------ //
-module resourceGroupModule 'ResourceGroup/resourcegroup.bicep' = {
-  scope: subscription()
-  name: resourceGroupName
-}
-
-// ------------------------ //
-// 2) Storage Account Module
+// 1) Storage Account Module
 // ------------------------ //
 
 module storageAccountModule './StorageAccount/storageaccount.bicep' = {
@@ -56,7 +47,7 @@ module storageAccountModule './StorageAccount/storageaccount.bicep' = {
 }
 
 // -------------------------------- //
-// 3) Application Insights  Module
+// 2) Application Insights  Module
 // -------------------------------- //
 
 module appInsightsModule './AppInsights/appinsights.bicep' = {
@@ -70,7 +61,7 @@ module appInsightsModule './AppInsights/appinsights.bicep' = {
 }
 
 // -------------------------------- //
-// 4) SQL Server + Database Module
+// 3) SQL Server + Database Module
 // -------------------------------- //
 
 module databaseModule './Database/database.bicep' = {
@@ -98,7 +89,7 @@ var databaseConnectionStringAdmin = format(
 
 
 // ------------------------ //
-// 5) App Service  Module
+// 4) App Service  Module
 // ------------------------ //
 
 module appServiceModule './AppService/appservice.bicep' = {
