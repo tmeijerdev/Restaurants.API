@@ -16,6 +16,7 @@ resource sqlServer 'Microsoft.Sql/servers@2024-05-01-preview' = {
   properties: {
     administratorLogin: sqlAdministratorLogin
     administratorLoginPassword: sqlAdministratorPassword
+    publicNetworkAccess: 'Enabled'
   }
   tags: {
     CreatedAt: creationDate
