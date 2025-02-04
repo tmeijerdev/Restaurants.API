@@ -1,6 +1,6 @@
 // Common parameters
 @description('Prefix for resource names')
-param genericPrefix string = 'Ciratum'
+param genericPrefix string = 'Ciratum1'
 
 // Derive resource names
 var randomSuffix             = uniqueString(resourceGroup().id)
