@@ -34,6 +34,16 @@ jobs:
             --name MyResourceGroup \
             --location westeurope
 
+      - name: Deploy Bicep
+        run: |
+          az deployment group create \
+            --name RestaurantsDeployment \
+            --resource-group MyResourceGroup \
+            --template-file ./bicep/main.bicep \
+            --parameters sqlAdministratorLogin="adminuser" \
+                        sqlAdministratorPassword="MyP@ssw0rd!" \
+                        location="westeurope"
+
       - name: Get WebApp Name
         run: |
           echo "Retrieving web app name..."
