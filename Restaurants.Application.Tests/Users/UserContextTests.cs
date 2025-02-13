@@ -5,7 +5,7 @@ using Moq;
 using Restaurants.Application.Users;
 using Restaurants.Domain.Constants;
 
-namespace Restaurants.Application.Tests;
+namespace Restaurants.Application.Tests.Users;
 
 public class UserContextTests
 {
