@@ -1,4 +1,3 @@
-using System;
 using FluentValidation.TestHelper;
 using Restaurants.Application.Restaurants.Commands.CreateRestaurant;
 
