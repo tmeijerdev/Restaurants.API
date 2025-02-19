@@ -1,4 +1,3 @@
-using System;
 using Restaurants.Domain.Exceptions;
 
 namespace Restaurants.API.Middlewares;
