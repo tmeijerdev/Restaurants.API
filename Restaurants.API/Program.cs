@@ -77,3 +77,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+// With this Program can be used in integrationTests
+public partial class Program{}
